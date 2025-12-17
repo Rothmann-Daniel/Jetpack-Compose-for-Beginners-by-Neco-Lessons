@@ -8,6 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -26,19 +27,22 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            Column(
+            Row(
                 modifier = Modifier
+                    .fillMaxHeight(0.5f)
                     .fillMaxSize()
                     .statusBarsPadding()
+                    .background(color = Color.Red)
+
             ) {
                 // Первая часть - Row
-                Row(
+                Column (
                     modifier = Modifier
-                        .weight(1f)  // Занимает половину экрана
-                        .fillMaxWidth()
+                        .weight(0.5f)
+                        .fillMaxHeight(0.85f)
                         .background(color = Color.Yellow),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalArrangement = Arrangement.SpaceEvenly,
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     newText()
                     Text(text = "RowDescription")
@@ -48,8 +52,8 @@ class MainActivity : ComponentActivity() {
                 // Вторая часть - Column
                 Column(
                     modifier = Modifier
-                        .weight(1f)  // Занимает вторую половину экрана
-                        .fillMaxWidth()
+                        .weight(0.5f)
+                        .fillMaxHeight()
                         .background(color = Color.LightGray),
                     verticalArrangement = Arrangement.SpaceEvenly,
                     horizontalAlignment = Alignment.CenterHorizontally
