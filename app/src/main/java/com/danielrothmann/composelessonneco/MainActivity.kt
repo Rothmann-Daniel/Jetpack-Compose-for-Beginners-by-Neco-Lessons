@@ -27,6 +27,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            // основной контейнер
             Row(
                 modifier = Modifier
                     .fillMaxHeight(0.5f)
@@ -35,7 +36,7 @@ class MainActivity : ComponentActivity() {
                     .background(color = Color.Red)
 
             ) {
-                // Первая часть - Row
+                // Первая часть -  Column
                 Column (
                     modifier = Modifier
                         .weight(0.5f)
