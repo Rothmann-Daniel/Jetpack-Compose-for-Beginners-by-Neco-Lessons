@@ -1,21 +1,28 @@
 package com.danielrothmann.composelessonneco
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -25,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -39,9 +47,22 @@ class MainActivity : ComponentActivity() {
                 modifier = Modifier
                     .fillMaxSize()
                     .statusBarsPadding()
+                    .verticalScroll(rememberScrollState())//Скролл с запоминанием позиции
             ) {
                 listItem("Daniel Rothmann", "Android Developer")
                 listItem("Viktoria Rothmann", "Java Developer")
+                listItem("John Doe", "iOS Developer")
+                listItem("Jane Doe", "Flutter Developer")
+                listItem("John Doe", "Kotlin Developer")
+                listItem("John Doe","RxJava")
+                listItem("John Doe","C++")
+                listItem("John Doe","React Native")
+                listItem("John Doe","C#")
+                listItem("John Doe","Python")
+                listItem("John Doe","Node.js")
+                listItem("John Doe","C#")
+                listItem("John Doe","Python")
+                listItem("John Doe","Node.js")
             }
 
         }
@@ -53,7 +74,18 @@ private fun listItem(name: String, profile: String) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
+            //.offset(5.dp,5.dp) // Отступ он основного элемента
             .padding(4.dp)
+            .pointerInput(Unit) {
+                detectDragGesturesAfterLongPress { change, dragAmount ->
+                    Log.d("MyLog", "LongPress: $change, $dragAmount")
+                }
+            }
+
+           /* .clickable {
+                // Действия при клике
+                Log.d("MyLog", "Click")
+            }*/
             .shadow(5.dp), // Форма тени по умолчанию возьмётся из Card
         /* Альтернативно
            .shadow(
@@ -103,3 +135,4 @@ private fun listItem(name: String, profile: String) {
     }
 
 }
+
