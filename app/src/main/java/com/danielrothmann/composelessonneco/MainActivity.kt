@@ -27,6 +27,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,6 +41,7 @@ import androidx.compose.ui.unit.dp
 
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -71,21 +74,20 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 private fun listItem(name: String, profile: String) {
+    var counter = remember {
+        mutableStateOf(0) // запоминаем состояние
+    }
     Card(
         modifier = Modifier
             .fillMaxWidth()
             //.offset(5.dp,5.dp) // Отступ он основного элемента
             .padding(4.dp)
-            .pointerInput(Unit) {
-                detectDragGesturesAfterLongPress { change, dragAmount ->
-                    Log.d("MyLog", "LongPress: $change, $dragAmount")
-                }
-            }
-
-           /* .clickable {
+            .clickable {
                 // Действия при клике
+                counter.value++
                 Log.d("MyLog", "Click")
-            }*/
+                Log.d("MyLog", "Counter: $counter")
+            }
             .shadow(5.dp), // Форма тени по умолчанию возьмётся из Card
         /* Альтернативно
            .shadow(
@@ -125,6 +127,9 @@ private fun listItem(name: String, profile: String) {
                     )
                     Text(
                         text = profile
+                    )
+                    Text(
+                        text = counter.value.toString()
                     )
                 }
 
