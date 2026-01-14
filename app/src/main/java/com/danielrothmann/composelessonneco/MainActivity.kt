@@ -13,12 +13,17 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 
 class MainActivity : ComponentActivity() {
@@ -42,10 +47,11 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 private fun circleItem() {
-    var counter = remember {
+    val counter = remember {
         mutableStateOf(0) // запоминаем состояние
     }
-    var color = remember {
+    //var counter by remember { mutableStateOf(0) } // с использованием by делегата
+    val color = remember {
         mutableStateOf(Color.Blue) // запоминаем состояние
     }
     Box(
@@ -55,20 +61,26 @@ private fun circleItem() {
             .clickable {
                 // Действия при клике
                 counter.value++
-            }
+               // counter ++  с использованием by делегата
+            },
+        contentAlignment = Alignment.Center
 
     ) {
         Text(
-            text = counter.value.toString()
+            text = counter.value.toString(),
+            style = TextStyle(
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White
+            )
         )
-       if (counter.value < 10) {
+        if (counter.value %2 == 0) {
             color.value = Color.Blue
+        } else {
+            color.value = Color.Red
         }
-        else{
-           color.value = Color.Red
-       }
     }
 
-
 }
+
 
