@@ -19,19 +19,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
-import com.danielrothmann.composelessonneco.ui.theme.TsstColor1
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Для белого статус-бара - разрешаем отрисовку за системными барами
         WindowCompat.setDecorFitsSystemWindows(window, false)
-
         enableEdgeToEdge()
+
         setContent {
             MaterialTheme {
-                showMenu()
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Color.White)
+                        .statusBarsPadding()
+                ) {
+                    showMenu()
+                }
             }
         }
     }
@@ -43,35 +48,26 @@ class MainActivity : ComponentActivity() {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(140.dp)  // Фиксированная высота меню
-                .background(Color.White)  // Белый фон для Box (будет виден в статус-баре)
+                .height(120.dp)
+               // .background(Color.LightGray)
         ) {
-            // тестовый фон только для LazyRow
             LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(120.dp)  // Высота LazyRow меньше чем у Box
-                    .align(Alignment.BottomCenter)  // Размещаем внизу Box
-                    .background(TsstColor1)  // Тестовый фон для LazyRow
-                    .padding(horizontal = 8.dp, vertical = 16.dp)  // Отступы по бокам и сверху/снизу
-
+                    .align(Alignment.Center)
+                    .padding(horizontal = 8.dp, vertical = 10.dp),
+                horizontalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(12.dp)
             ) {
-                itemsIndexed(menu) { index, itemShow ->
-                    // Добавляем отступы между элементами
+                itemsIndexed(menu) { _, itemShow ->
                     ItemFoodRow(
                         itemListFood = itemShow,
-                        modifier = Modifier.padding(
-                            start = if (index == 0) 0.dp else 8.dp,  // Первому элементу отступ слева не нужен
-                            end = if (index == menu.lastIndex) 0.dp else 8.dp  // Последнему справа не нужен
-                        )
+                        modifier = Modifier.background(Color.White)
                     )
                 }
             }
         }
     }
 
-
-    // Функция возвращает список, а не один элемент
     private fun createMenu(): List<ModelFood> {
         return listOf(
             ModelFood(R.drawable.im_combo, "Combo"),
@@ -84,9 +80,3 @@ class MainActivity : ComponentActivity() {
         )
     }
 }
-
-
-
-
-
-
